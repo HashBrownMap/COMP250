@@ -1,1 +1,1 @@
-# COMP250
+# McGill COMP250 assignments 
