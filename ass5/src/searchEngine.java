@@ -48,34 +48,34 @@ public class searchEngine {
 		 * s, LinkedList l).
 		 */
 
-		Queue<String> queue = new ArrayDeque();
-		internet.addVertex(url);
-		internet.setVisited(url, true);
-		LinkedList<String> words = htmlParsing.getContent(url);
-		LinkedList<String> links = htmlParsing.getLinks(url);
+		Queue<String> queue = new ArrayDeque<String>();
+		internet.addVertex(url);             //adding first vertex
+		internet.setVisited(url, true);      
+		LinkedList<String> words = htmlParsing.getContent(url);      //getting words from the first site
+		LinkedList<String> links = htmlParsing.getLinks(url);        //getting the links it's pointing too
 		Iterator<String> j = links.iterator();
 		while (j.hasNext()) {
 			String link = j.next();
-			internet.addVertex(link);
-			internet.addEdge(url, link);
+			internet.addVertex(link);                                //adding the links to the graph
+			internet.addEdge(url, link);                             //add edge between the site and its links
 		}
 		Iterator<String> q = words.iterator();
-		while (q.hasNext()) {
+		while (q.hasNext()) {                                        //appending our Hashmap
 			String word = q.next();
-			if (wordIndex.containsKey(word)) {
+			if (wordIndex.containsKey(word)) {                       //if it already has that word 
 				if (!(wordIndex.get(word).contains(url))) {
 					wordIndex.get(word).addLast(url);
 				}
-			} else {
+			} else {                                                  //if it doesnt
 
-				LinkedList<String> nouveau = new LinkedList<String>();
-				nouveau.addLast(url);
-				wordIndex.put(word, nouveau);
+				LinkedList<String> nouveau = new LinkedList<String>();      //create new L-L
+				nouveau.addLast(url);                                       
+				wordIndex.put(word, nouveau);                              //insert in hashmap
 			}
 		}
 		queue.add(url);
-		while (!queue.isEmpty()) {
-			String w = queue.remove();
+		while (!queue.isEmpty()) {            //BFS for web crawling and creating a graph
+			String w = queue.remove();    
 			for (String v : internet.getNeighbors(w)) {
 				if (internet.getVisited(v) == false) {
 					internet.setVisited(v, true);
@@ -126,20 +126,20 @@ public class searchEngine {
 		Iterator<String> i = sites.iterator();
 		while (i.hasNext()) {
 			String site = i.next();
-			internet.setPageRank(site, 1);
+			internet.setPageRank(site, 1);    //setting all page ranks to 1 to start off
 		}
 		for (int q = 0; q < 100; q++) {
 			i = sites.iterator();
 			while (i.hasNext()) {
 				double pr = 0.5;
 				String site = i.next();
-				LinkedList<String> refers = internet.getEdgesInto(site);
+				LinkedList<String> refers = internet.getEdgesInto(site);   //get all sites referring to current site
 				Iterator<String> m = refers.iterator();
 				while (m.hasNext()) {
 					String ref = m.next();
-					pr += 0.5 * (internet.getPageRank(ref) / internet.getOutDegree(ref));
+					pr += 0.5 * (internet.getPageRank(ref) / internet.getOutDegree(ref));  //calculating PR
 				}
-				internet.setPageRank(site, pr);
+				internet.setPageRank(site, pr);  
 			}
 		}
 	}
@@ -162,7 +162,7 @@ public class searchEngine {
 		if(wordIndex.containsKey(query)){
 			System.out.println("the word exists");
 			ListIterator<String> Iterator = wordIndex.get(query).listIterator();
-			while(Iterator.hasNext()){
+			while(Iterator.hasNext()){                          //finding best PR
 				String site = Iterator.next();
 				if(internet.getPageRank(site) > bestpr){
 					bestpr = internet.getPageRank(site);
@@ -179,10 +179,10 @@ public class searchEngine {
 	public static void main(String args[]) throws Exception {
 		searchEngine mySearchEngine = new searchEngine();
 		// to debug your program, start with.
-		 //mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
+		 mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
 
 		// When your program is working on the small example, move on to
-		mySearchEngine.traverseInternet("http://www.cs.mcgill.ca");
+		//mySearchEngine.traverseInternet("http://www.cs.mcgill.ca");
 
 		// this is just for debugging purposes. REMOVE THIS BEFORE SUBMITTING
 		System.out.println(mySearchEngine);
