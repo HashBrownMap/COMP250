@@ -172,20 +172,20 @@ public class searchEngine {
 		}else{
 			best = "it doesn't exist";
 		}
-		System.out.println("pr ="+bestpr);
-		return best; // remove this
+		System.out.println("Page Rank ="+bestpr);
+		return best; 
 	} // end of getBestURL
 
 	public static void main(String args[]) throws Exception {
 		searchEngine mySearchEngine = new searchEngine();
 		// to debug your program, start with.
-		 mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
+		 //mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
 
 		// When your program is working on the small example, move on to
-		//mySearchEngine.traverseInternet("http://www.cs.mcgill.ca");
+		mySearchEngine.traverseInternet("http://www.cs.mcgill.ca");
 
 		// this is just for debugging purposes. REMOVE THIS BEFORE SUBMITTING
-		System.out.println(mySearchEngine);
+		//System.out.println(mySearchEngine);
 
 		mySearchEngine.computePageRanks();
 
