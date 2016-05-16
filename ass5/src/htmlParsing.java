@@ -3,8 +3,6 @@ import java.util.*;
 import java.lang.*;
 import java.net.*;
 
-/* YOU SHOULD NOT NEED TO LOOK AT THIS CODE AT ALL.
-   BUT IT COULD BE INTERESTING FOR YOU TO SEE HOW IT WORKS. */
 
 // This class implements a simple parser for html documents
 public class htmlParsing {
